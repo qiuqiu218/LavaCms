@@ -25,7 +25,14 @@ class BaseRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         if ($this->ajax()) {
-            throw new HttpResponseException(app('res')->error($validator->errors()->first()));
+            $arr = [];
+            foreach(json_decode($validator->errors()) as $key => $item) {
+                $arr[] = [
+                  'key' => $key,
+                  'text' => $item[0]
+                ];
+            }
+            throw new HttpResponseException(app('res')->setParams($arr)->error('验证错误'));
         } else {
             parent::failedValidation($validator);
         }

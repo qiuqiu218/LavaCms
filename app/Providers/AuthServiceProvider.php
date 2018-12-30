@@ -25,7 +25,14 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        // 解决passport多表登录到问题(暂时先这么解决)
+        $params = request()->all();
+        if (array_key_exists('provider', $params)) {
+            config(['auth.guards.api.provider' => $params['provider']]);
+        }
         Passport::routes();
+        Passport::tokensExpireIn(now()->addDays(15));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
         //
     }
 }

@@ -81,12 +81,34 @@ class Resource {
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getControllerName()
+    {
+        $baseController = class_basename(request()->route()->getActionName());
+        $controller = explode("@", $baseController)[0];
+        $controller = str_before($controller, 'Controller'); // 函数返回字符串中给定值之前的所有内容 (见辅助函数)
+//        $controller = snake_case($controller); // 字符串转蛇形
+        return $controller;
+    }
+
+    /**
+     * 获取路由前缀
+     * @return string
+     */
+    public function getPrefix()
+    {
+        return studly_case(request()->route()->getAction()['prefix'] ?? 'home');
+    }
+
     public function response()
     {
         return new JsonResponse([
             'message' => $this->message,
             'status' => $this->status,
-            'data' => $this->params
+            'data' => $this->params,
+            'code' => $this->statusCode
         ], $this->statusCode);
     }
 }

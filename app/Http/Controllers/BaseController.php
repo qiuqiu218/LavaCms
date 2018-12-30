@@ -9,12 +9,16 @@ class BaseController extends Controller
      */
     protected $res = null;
 
+    protected $model = null;
+
     /**
      * BaseController constructor.
      */
     public function __construct()
     {
         $this->res = app('res');
+        $controller = 'App\Models\\'.$this->res->getPrefix().'\\'.$this->res->getControllerName();
+        $this->model = new $controller();
     }
 
     /**
