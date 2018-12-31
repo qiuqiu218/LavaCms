@@ -37,7 +37,7 @@ class UserRequest extends BaseRequest
                         'required',
                         'string',
                         'max:30',
-                        Rule::unique('admins')->ignore($this->route('admin'))
+                        Rule::unique('admins')->ignore($this->route('user'))
                     ],
                     'password' => 'required|between:6,20|string',
                     'nickname' => 'sometimes|nullable|string',
@@ -46,13 +46,13 @@ class UserRequest extends BaseRequest
                         'nullable',
                         'numeric',
                         'digits_between:11,11',
-                        Rule::unique('admins')->ignore($this->route('admin'))
+                        Rule::unique('admins')->ignore($this->route('user'))
                     ],
                     'email' => [
                         'sometimes',
                         'nullable',
                         'email',
-                        Rule::unique('admins')->ignore($this->route('admin'))
+                        Rule::unique('admins')->ignore($this->route('user'))
                     ]
                 ];
             default:
