@@ -49,12 +49,8 @@ class Admin extends Authenticatable
         }
     }
 
-    /**
-     * @param $username
-     * @param $password
-     * @return array
-     */
-    public function login($username, $password)
+
+    public static function getToken($username, $password)
     {
         $http = new Client();
         $passport = \Laravel\Passport\Client::query()->find(2);

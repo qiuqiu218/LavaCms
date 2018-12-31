@@ -9,7 +9,7 @@ class BaseController extends Controller
      */
     protected $res = null;
 
-    protected $model = null;
+//    protected $model = null;
 
     /**
      * BaseController constructor.
@@ -17,15 +17,15 @@ class BaseController extends Controller
     public function __construct()
     {
         $this->res = app('res');
-        $controller = 'App\Models\\'.$this->res->getPrefix().'\\'.$this->res->getControllerName();
-        $this->model = new $controller();
+//        $controller = 'App\Models\\'.$this->res->getPrefix().'\\'.$this->res->getControllerName();
+//        $this->model = new $controller();
     }
 
     /**
      * @param string $message
      * @return mixed
      */
-    public function success($message = '操作成功')
+    public function success($message = '')
     {
         return $this->res->success($message);
     }
@@ -34,7 +34,7 @@ class BaseController extends Controller
      * @param string $message
      * @return mixed
      */
-    public function error($message = '操作失败')
+    public function error($message = '')
     {
         return $this->res->error($message);
     }
@@ -49,10 +49,10 @@ class BaseController extends Controller
     }
 
     /**
-     * @param array $data
-     * @return mixed
+     * @param $data
+     * @return $this
      */
-    public function setParams($data = [])
+    public function setParams($data)
     {
         return $this->res->setParams($data);
     }

@@ -20,11 +20,11 @@ class Resource {
      * @param string $message
      * @return JsonResponse
      */
-    public function success($message = '操作成功')
+    public function success($message = '')
     {
         return $this->setStatusCode(200)
                     ->setStatus('success')
-                    ->setMessage($message ?? $this->message)
+                    ->setMessage($message)
                     ->response();
     }
 
@@ -67,15 +67,48 @@ class Resource {
      */
     private function setMessage($message)
     {
+        if (!$message) {
+            $message = $this->getDefaultMessage();
+        }
         $this->message = $message;
         return $this;
     }
 
     /**
-     * @param array $data
+     * @return string
+     */
+    private function getDefaultMessage () {
+        $statusMessage = $this->status === 'success' ? '成功' : '失败';
+        switch (request()->getMethod())
+        {
+            case 'GET':
+            {
+                return '获取'.$statusMessage;
+            }
+            case 'POST':
+            {
+                return '提交'.$statusMessage;
+            }
+            case 'PUT':
+            {
+                return '修改'.$statusMessage;
+            }
+            case 'DELETE':
+            {
+                return '删除'.$statusMessage;
+            }
+            default:
+            {
+                return '操作'.$statusMessage;
+            }
+        }
+    }
+
+    /**
+     * @param $data
      * @return $this
      */
-    public function setParams(array $data = [])
+    public function setParams($data)
     {
         $this->params = $data;
         return $this;

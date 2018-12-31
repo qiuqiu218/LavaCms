@@ -8,4 +8,5 @@
 
 Route::namespace('Admin')->group(function () {
     Route::post('login', 'AdminController@login');
+    Route::resource('admin', 'AdminController');
 });
