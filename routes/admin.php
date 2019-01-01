@@ -10,4 +10,7 @@ Route::namespace('Admin')->group(function () {
     Route::post('login', 'AdminController@login');
     Route::resource('admin', 'AdminController');
     Route::resource('user', 'UserController');
+    Route::resource('menu', 'MenuController');
+    Route::resource('permission', 'PermissionController');
+    Route::resource('role', 'RoleController');
 });
