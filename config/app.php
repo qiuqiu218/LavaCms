@@ -178,6 +178,11 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+
+        /**
+         * My Service
+         */
         App\Providers\ResourceServiceProvider::class,
     ],
 
