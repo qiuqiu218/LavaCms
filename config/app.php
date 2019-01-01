@@ -177,6 +177,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Baum\Providers\BaumServiceProvider::class,
         App\Providers\ResourceServiceProvider::class,
     ],
 
