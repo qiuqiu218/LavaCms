@@ -14,4 +14,5 @@ Route::namespace('Admin')->group(function () {
     Route::resource('permission', 'PermissionController');
     Route::resource('role', 'RoleController');
     Route::resource('table', 'TableController');
+    Route::resource('field', 'FieldController');
 });
