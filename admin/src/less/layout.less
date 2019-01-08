@@ -1,0 +1,51 @@
+.@{prefix}layout {
+  height: 100%;
+  .header {
+    width: 100%;
+    position: relative;
+    &:after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: @border-color-base;
+      z-index: 1000;
+    }
+  }
+  .logo,
+  .admin {
+    padding: 0 40px;
+  }
+  .admin {
+    & > div {
+      height: 100%;
+    }
+    .ivu-dropdown-rel {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .menu {
+    &:after {
+      height: 0;
+    }
+  }
+
+  .breadcrumb {
+    padding: 20px;
+    background: @layout-body-background;
+  }
+  .content {
+    background: @layout-body-background;
+    padding: 0 20px 20px;
+    & > div {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+}
