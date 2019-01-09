@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\AdminRequest;
 use App\Models\Admin\Admin;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends BaseController
 {
@@ -12,7 +13,7 @@ class AdminController extends BaseController
      * @param AdminRequest $request
      * @return mixed
      */
-    public function login(AdminRequest $request)
+    public function getToken(AdminRequest $request)
     {
         $input = $request->only(['username', 'password']);
         $res = Admin::getToken($input['username'], $input['password']);
@@ -21,6 +22,14 @@ class AdminController extends BaseController
         } else {
             return $this->setStatusCode($res['code'])->error($res['message']);
         }
+    }
+
+    /**
+     * @return \App\User|\Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    public function login()
+    {
+        return Auth::user();
     }
 
     /**

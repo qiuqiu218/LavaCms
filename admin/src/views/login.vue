@@ -4,10 +4,10 @@
       <p slot="title">管理员登录</p>
       <Form label-position="right" :label-width="50">
         <FormItem label="用户名">
-          <Input placeholder="请输入用户名" v-model="data.username"></Input>
+          <Input placeholder="请输入用户名" v-model="form.username"></Input>
         </FormItem>
         <FormItem label="密码">
-          <Input placeholder="请输入密码" v-model="data.password"></Input>
+          <Input placeholder="请输入密码" v-model="form.password"></Input>
         </FormItem>
         <FormItem>
           <Button type="primary" @click="submit">登录</Button>
@@ -21,7 +21,7 @@
 export default {
   data () {
     return {
-      data: {
+      form: {
         username: '',
         password: ''
       }
@@ -29,9 +29,9 @@ export default {
   },
   methods: {
     submit () {
-      this.get('login', this.data)
-        .then(res => {
-          console.log(res)
+      this.$store.dispatch('user/auth/getToken', this.form)
+        .catch(res => {
+          this.$Message.error(res.message)
         })
     }
   }

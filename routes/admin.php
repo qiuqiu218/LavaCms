@@ -6,7 +6,7 @@
  * Time: 11:18
  */
 
-Route::namespace('Admin')->group(function () {
+Route::namespace('Admin', 'auth:admin')->group(function () {
     Route::post('login', 'AdminController@login');
     Route::resource('admin', 'AdminController');
     Route::resource('user', 'UserController');
@@ -15,4 +15,7 @@ Route::namespace('Admin')->group(function () {
     Route::resource('role', 'RoleController');
     Route::resource('table', 'TableController');
     Route::resource('field', 'FieldController');
+});
+Route::namespace('Admin')->group(function () {
+    Route::post('getToken', 'AdminController@getToken');
 });
