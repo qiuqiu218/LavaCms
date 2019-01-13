@@ -1,0 +1,8 @@
+@len: 10;
+.generate-columns(@n) when (@n > 0) {
+  .@{prefix}font-@{n} {
+    font-size: ((@len - @n) * 2) + 12px
+  }
+  .generate-columns((@n - 1))
+}
+.generate-columns(10);
