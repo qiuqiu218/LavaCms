@@ -6,8 +6,8 @@
  * Time: 11:18
  */
 
-Route::namespace('Admin', 'auth:admin')->group(function () {
-    Route::post('login', 'AdminController@login');
+Route::namespace('Admin')->middleware('auth:admin')->group(function () {
+    Route::any('login', 'AdminController@login');
     Route::resource('admin', 'AdminController');
     Route::resource('user', 'UserController');
     Route::resource('menu', 'MenuController');
