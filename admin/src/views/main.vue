@@ -18,12 +18,22 @@
 import HeaderModule from '../components/Header'
 import SiderModule from '../components/Sider'
 import BreadcrumbModule from '../components/Breadcrumb'
+import cache from '@/plugins/cache'
 
 export default {
   components: {
     HeaderModule,
     SiderModule,
     BreadcrumbModule
+  },
+  beforeRouteEnter (to, from, next) {
+    if (!cache.user.get('token')) {
+      next(vm => {
+        vm.openWin('login')
+      })
+    } else {
+      next()
+    }
   },
   methods: {
   }

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import cache from './cache'
 
 // // 添加请求拦截器
 // axios.interceptors.request.use(function (config) {
@@ -16,10 +17,14 @@ import axios from 'axios'
 //   return Promise.reject(error)
 // })
 
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+axios.defaults.headers.common['Accept'] = 'application/json'
 
 function ajax (data) {
-  axios.defaults.baseURL = 'http://192.168.0.238/admin/'
+  axios.defaults.baseURL = 'http://lavacms/admin/'
+  if (cache.user.get('token')) {
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + cache.user.get('token')
+  }
 
   return new Promise((resolve, reject) => {
     axios(data)
@@ -32,10 +37,14 @@ function ajax (data) {
         }
       })
       .catch(res => {
-        if (res.response.status === 401) {
-          reject(res.response.data)
+        if (res.response) {
+          if (res.response.status === 401) {
+            reject(res.response.data)
+          } else {
+            reject(res.response.data)
+          }
         } else {
-          reject(res.response.data)
+          reject(new Error('网络错误'))
         }
       })
   })

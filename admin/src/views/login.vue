@@ -10,7 +10,7 @@
           <Input placeholder="请输入密码" v-model="form.password"></Input>
         </FormItem>
         <FormItem>
-          <Button type="primary" @click="submit">登录</Button>
+          <Button type="primary" :loading="loading" @click="submit" long>登录</Button>
         </FormItem>
       </Form>
     </Card>
@@ -22,16 +22,25 @@ export default {
   data () {
     return {
       form: {
-        username: '',
-        password: ''
-      }
+        username: 'admin',
+        password: '111111'
+      },
+      loading: false
     }
   },
   methods: {
     submit () {
+      this.loading = true
       this.$store.dispatch('user/auth/getToken', this.form)
+        .then(res => {
+          this.openWin('main')
+          this.$Message.success(res.message)
+        })
         .catch(res => {
           this.$Message.error(res.message)
+        })
+        .then(res => {
+          this.loading = false
         })
     }
   }

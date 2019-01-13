@@ -25,11 +25,11 @@ class AdminController extends BaseController
     }
 
     /**
-     * @return \App\User|\Illuminate\Contracts\Auth\Authenticatable|null
+     * @return mixed
      */
     public function login()
     {
-        return Auth::user();
+        return $this->setParams(Auth::user())->success('登录成功');
     }
 
     /**

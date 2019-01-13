@@ -16,14 +16,15 @@
       </MenuItem>
     </Menu>
     <div class="admin">
-      <Dropdown>
-        <div>
+      <Dropdown @on-click="clickDropdown">
+        <div flex="cross:center">
           <Avatar icon="ios-person"/>
+          <Font :size="8" style="margin-left: 6px">{{userInfo.nickname}}</Font>
           <Icon type="md-arrow-dropdown" style="font-size: 24px" />
         </div>
         <DropdownMenu slot="list">
-          <DropdownItem>驴打滚</DropdownItem>
-          <DropdownItem>炸酱面</DropdownItem>
+          <DropdownItem name="setup">设置</DropdownItem>
+          <DropdownItem name="logout">注销</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </div>
@@ -32,5 +33,20 @@
 
 <script>
 export default {
+  methods: {
+    clickDropdown (name) {
+      this[name]()
+    },
+    logout () {
+      this.$Modal.confirm({
+        content: '您真的要注销吗?',
+        onOk: async () => {
+          const message = await this.$store.dispatch('user/auth/logout')
+          this.openWin('login')
+          this.$Message.success(message)
+        }
+      })
+    }
+  }
 }
 </script>

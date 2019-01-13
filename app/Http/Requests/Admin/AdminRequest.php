@@ -20,7 +20,7 @@ class AdminRequest extends BaseRequest
                 return [
                     'page' => 'sometimes|integer'
                 ];
-            case 'login':
+            case 'getToken':
                 return [
                     'username' => 'required|string',
                     'password' => 'required|between:6,20|string'

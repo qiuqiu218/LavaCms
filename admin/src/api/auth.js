@@ -5,5 +5,8 @@ export default {
     return axios.post('getToken', payload).then(res => {
       return res.data.access_token
     })
+  },
+  login () {
+    return axios.get('login')
   }
 }

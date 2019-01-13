@@ -1,24 +1,30 @@
 import auth from '@/api/auth'
-import { user } from '@/plugins/cache'
+import cache from '@/plugins/cache'
 
 const state = {
-  token: ''
+  token: '',
+  id: 0,
+  username: ''
 }
 
 const mutations = {
   LOGIN (state) {
-    //
-  },
-  SET_TOKEN (state, token) {
-    state.token = token
-    user.set('token', token)
+    state = Object.assign(state, cache.user.getAll())
   }
 }
 
 const actions = {
   async getToken ({ commit }, payload) {
     const token = await auth.getToken(payload)
-    commit('SET_TOKEN', token)
+    cache.user.set('token', token)
+    const res = await auth.login()
+    cache.user.setAll(res.data)
+    commit('LOGIN')
+    return res
+  },
+  async logout () {
+    cache.user.clearAll()
+    return '注销成功'
   }
 }
 
