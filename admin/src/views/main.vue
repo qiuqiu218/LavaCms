@@ -7,7 +7,7 @@
         <breadcrumb-module></breadcrumb-module>
         <div class="content">
           <Card>
-              <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+            <router-view></router-view>
           </Card>
         </div>
       </div>

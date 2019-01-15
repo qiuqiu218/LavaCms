@@ -31,7 +31,7 @@ export default {
   methods: {
     submit () {
       this.loading = true
-      this.$store.dispatch('user/auth/getToken', this.form)
+      this.$store.dispatch('auth/login', this.form)
         .then(res => {
           this.openWin('main')
           this.$Message.success(res.message)
