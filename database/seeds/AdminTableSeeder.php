@@ -11,10 +11,11 @@ class AdminTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Admin\Admin::query()->create([
+        $user = \App\Models\Admin\Admin::query()->create([
             'username' => 'admin',
             'nickname' => '万鑫',
             'password' => '111111'
         ]);
+        $user->assignRole('super_admin');
     }
 }
