@@ -29,7 +29,11 @@ class AdminController extends BaseController
      */
     public function login()
     {
-        return $this->setParams(Auth::user())->success('登录成功');
+    	$user = Auth::user();
+        return $this->setParams([
+        	'userInfo' => $user,
+			'menu' => $user->getMenu()
+		])->success('登录成功');
     }
 
     /**
