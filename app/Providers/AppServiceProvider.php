@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Admin\Menu;
+use App\Observers\Admin\MenuObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Menu::observe(MenuObserver::class);
     }
 
     /**
