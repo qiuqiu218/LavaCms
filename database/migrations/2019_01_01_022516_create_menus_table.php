@@ -17,14 +17,16 @@ class CreateMenusTable extends Migration {
         $table->integer('lft')->comment('左边界')->nullable();
         $table->integer('rgt')->comment('右边界')->nullable();
         $table->integer('depth')->comment('深度')->nullable();
-        $table->string('title', 30)->comment('菜单标题');
+		$table->string('name', 30)->comment('标识(权限管理用到)');
+		$table->string('title', 30)->comment('菜单标题');
         $table->string('description', 120)->comment('菜单描述')->nullable();
         $table->string('route', 120)->comment('路由')->nullable();
         $table->unsignedTinyInteger('type')->comment('菜单类型(0=通用1=系统菜单)')->nullable();
         $table->unsignedSmallInteger('sort')->comment('排序')->nullable();
         $table->timestamps();
 
-        $table->index('parent_id');
+		$table->unique('name');
+		$table->index('parent_id');
         $table->index('lft');
         $table->index('rgt');
     });

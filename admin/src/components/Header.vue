@@ -1,18 +1,9 @@
 <template>
   <div flex="box:justify cross:stretch" class="header">
     <div class="logo">logo</div>
-    <Menu mode="horizontal" active-name="1">
-      <MenuItem name="1">
-        <Icon type="ios-navigate"></Icon>Item 1
-      </MenuItem>
-      <MenuItem name="2">
-        <Icon type="ios-keypad"></Icon>Item 2
-      </MenuItem>
-      <MenuItem name="3">
-        <Icon type="ios-analytics"></Icon>Item 3
-      </MenuItem>
-      <MenuItem name="4">
-        <Icon type="ios-paper"></Icon>Item 4
+    <Menu mode="horizontal" @on-select="selectRoot" :active-name="activeName">
+      <MenuItem :name="v.name" v-for="v in list" :key="v.name">
+        {{v.title}}
       </MenuItem>
     </Menu>
     <div class="admin">
@@ -32,7 +23,17 @@
 </template>
 
 <script>
+// import cache from '@/plugins/cache'
+import { mapGetters, mapState } from 'vuex'
 export default {
+  computed: {
+    ...mapGetters('menu', {
+      list: 'getHeaderMenu'
+    }),
+    ...mapState('menu', {
+      activeName: state => state.activeName
+    })
+  },
   methods: {
     clickDropdown (name) {
       this[name]()
@@ -41,11 +42,14 @@ export default {
       this.$Modal.confirm({
         content: '您真的要注销吗?',
         onOk: async () => {
-          const message = await this.$store.dispatch('user/auth/logout')
+          const message = await this.$store.dispatch('auth/logout')
           this.openWin('login')
           this.$Message.success(message)
         }
       })
+    },
+    selectRoot (name) {
+      this.$store.dispatch('menu/switchHeaderMenu', name)
     }
   }
 }

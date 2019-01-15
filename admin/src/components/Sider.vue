@@ -1,34 +1,40 @@
 <template>
-  <Menu width="200px">
-    <Submenu name="1">
+  <Menu width="200px" :open-names="openNames" @on-select="switchSider" @on-open-change="changeSider" :active-name="siderActiveName">
+    <Submenu :name="v.name" v-for="v in list" :key="v.name">
       <template slot="title">
         <Icon type="ios-navigate"></Icon>
-        <span>Item 1</span>
+        <span>{{v.title}}</span>
       </template>
-      <MenuItem name="1-1">Option 1</MenuItem>
-      <MenuItem name="1-2">Option 2</MenuItem>
-      <MenuItem name="1-3">Option 3</MenuItem>
-    </Submenu>
-    <Submenu name="2">
-      <template slot="title">
-        <Icon type="ios-keypad"></Icon>
-        <span>Item 2</span>
-      </template>
-      <MenuItem name="2-1">Option 1</MenuItem>
-      <MenuItem name="2-2">Option 2</MenuItem>
-    </Submenu>
-    <Submenu name="3">
-      <template slot="title">
-        <Icon type="ios-analytics"></Icon>
-        <span>Item 3</span>
-      </template>
-      <MenuItem name="3-1">Option 1</MenuItem>
-      <MenuItem name="3-2">Option 2</MenuItem>
+      <MenuItem :name="item.name" v-for="item in v.children" :key="item.name">{{item.title}}</MenuItem>
     </Submenu>
   </Menu>
 </template>
 
 <script>
+import { mapGetters, mapState, mapActions } from 'vuex'
+
 export default {
+  computed: {
+    ...mapGetters('menu', {
+      list: 'getSider'
+    }),
+    ...mapState('menu', {
+      openNames: state => state.openNames,
+      siderActiveName: state => state.siderActiveName
+    })
+  },
+  watch: {
+    siderActiveName (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.openFrame(this.siderActiveName)
+      }
+    }
+  },
+  methods: {
+    ...mapActions('menu', [
+      'changeSider',
+      'switchSider'
+    ])
+  }
 }
 </script>
