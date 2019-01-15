@@ -1,22 +1,6 @@
 import axios from 'axios'
 import cache from './cache'
 
-// // 添加请求拦截器
-// axios.interceptors.request.use(function (config) {
-//   // 在发送请求之前做些什么
-//   return config
-// }, error => {
-//   return Promise.reject(error)
-// })
-
-// // 添加响应拦截器
-// axios.interceptors.response.use(function (response) {
-//   // 对响应数据做点什么
-//   return response
-// }, error => {
-//   return Promise.reject(error)
-// })
-
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers.common['Accept'] = 'application/json'
 
@@ -50,23 +34,33 @@ function ajax (data) {
   })
 }
 
-function get (url, data) {
-  return ajax({
-    url,
-    method: 'get',
-    params: data
-  })
-}
-
-function post (url, data) {
-  return ajax({
-    url,
-    method: 'post',
-    data
-  })
-}
-
 export default {
-  get,
-  post
+  get (url, data) {
+    return ajax({
+      url,
+      method: 'get',
+      params: data
+    })
+  },
+  post (url, data) {
+    return ajax({
+      url,
+      method: 'post',
+      data
+    })
+  },
+  put (url, data) {
+    return ajax({
+      url,
+      method: 'put',
+      data
+    })
+  },
+  delete (url, data) {
+    return ajax({
+      url,
+      method: 'delete',
+      data
+    })
+  }
 }
