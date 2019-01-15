@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import main from '../views/main'
 import login from '../views/login.vue'
+import member from './member'
 
 Vue.use(Router)
 
@@ -12,7 +13,10 @@ export default new Router({
     {
       path: '/',
       name: 'main',
-      component: main
+      component: main,
+      children: [
+        ...member
+      ]
     },
     {
       path: '/login',
