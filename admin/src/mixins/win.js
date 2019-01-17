@@ -11,7 +11,12 @@ function openFrame (name) {
   this.openWin(MENU[name])
 }
 
+function closeWin (step = -1) {
+  this.$router.go(step)
+}
+
 export default {
   openWin,
-  openFrame
+  openFrame,
+  closeWin
 }

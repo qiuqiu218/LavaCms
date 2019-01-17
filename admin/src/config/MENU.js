@@ -1,7 +1,6 @@
 /**
  * 菜单name转路由名称
  */
-
- export default {
+export default {
   'admin list': 'member/admin/list'
- }
+}

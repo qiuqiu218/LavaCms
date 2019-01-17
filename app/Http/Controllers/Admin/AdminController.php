@@ -42,12 +42,8 @@ class AdminController extends BaseController
      */
     public function index(AdminRequest $request)
     {
-        $page = $request->input('page', 1);
-        $limit = 10;
-        $data = Admin::query()->orderByDesc('id')
-                ->skip(($page - 1) * $limit)
-                ->take($limit)
-                ->get();
+        $limit = $request->input('limit', 10);
+        $data = Admin::query()->orderByDesc('id')->paginate($limit);
         return $this->setParams($data)->success();
     }
 
@@ -79,7 +75,7 @@ class AdminController extends BaseController
      */
     public function update(AdminRequest $request, $id)
     {
-        $input = $request->only((new Admin())->getFillable());
+        $input = array_filter($request->only((new Admin())->getFillable()));
         $data = Admin::query()->findOrFail($id);
         $res = $data->update($input);
         return $res ? $this->success() : $this->error();

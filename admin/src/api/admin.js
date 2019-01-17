@@ -13,7 +13,7 @@ export default {
   update (id, params) {
     return axios.put(`admin/${id}`, params)
   },
-  delete (id) {
+  destroy (id) {
     return axios.delete(`admin/${id}`)
   }
 }

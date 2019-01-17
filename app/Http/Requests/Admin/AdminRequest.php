@@ -18,38 +18,61 @@ class AdminRequest extends BaseRequest
         {
             case 'index':
                 return [
-                    'page' => 'sometimes|integer'
+					'limit' => 'sometimes|integer'
                 ];
             case 'getToken':
                 return [
-                    'username' => 'required|string',
+                    'username' => 'required|max:20|string',
                     'password' => 'required|between:6,20|string'
                 ];
             case 'store':
+				return [
+					'username' => [
+						'required',
+						'string',
+						'max:20',
+						Rule::unique('admins')->ignore($this->route('admin'))
+					],
+					'password' => 'required|between:6,20|string',
+					'nickname' => 'sometimes|max:20|nullable|string',
+					'phone' => [
+						'sometimes',
+						'nullable',
+						'numeric',
+						'digits_between:11,11',
+						Rule::unique('admins')->ignore($this->route('admin'))
+					],
+					'email' => [
+						'sometimes',
+						'nullable',
+						'email',
+						Rule::unique('admins')->ignore($this->route('admin'))
+					]
+				];
             case 'update':
-            return [
-                'username' => [
-                    'required',
-                    'string',
-                    'max:30',
-                    Rule::unique('admins')->ignore($this->route('admin'))
-                ],
-                'password' => 'required|between:6,20|string',
-                'nickname' => 'sometimes|nullable|string',
-                'phone' => [
-                    'sometimes',
-                    'nullable',
-                    'numeric',
-                    'digits_between:11,11',
-                    Rule::unique('admins')->ignore($this->route('admin'))
-                ],
-                'email' => [
-                    'sometimes',
-                    'nullable',
-                    'email',
-                    Rule::unique('admins')->ignore($this->route('admin'))
-                ]
-            ];
+				return [
+					'username' => [
+						'required',
+						'string',
+						'max:20',
+						Rule::unique('admins')->ignore($this->route('admin'))
+					],
+					'password' => 'sometimes|between:6,20|string',
+					'nickname' => 'sometimes|max:20|nullable|string',
+					'phone' => [
+						'sometimes',
+						'nullable',
+						'numeric',
+						'digits_between:11,11',
+						Rule::unique('admins')->ignore($this->route('admin'))
+					],
+					'email' => [
+						'sometimes',
+						'nullable',
+						'email',
+						Rule::unique('admins')->ignore($this->route('admin'))
+					]
+				];
             default:
                 return [];
         }
